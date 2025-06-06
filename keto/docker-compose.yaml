@@ -1,0 +1,13 @@
+
+services:
+  keto:
+    image: oryd/keto:v0.14.0
+    hostname: keto
+    container_name: keto
+    ports:
+      - 4466:4466
+      - 4467:4467
+    command: serve -c /home/ory/keto.yml
+    restart: on-failure
+    volumes:
+      - ./keto.yml:/home/ory/keto.yml

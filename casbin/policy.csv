@@ -1,0 +1,46 @@
+# Company definitions
+g, alice, company1
+g, bob, company1
+g, charlie, company1
+g, dave, company2
+g, eve, company2
+
+# Product ownership (product, company)
+g2, product1, company1
+g2, product2, company1
+g2, product3, company1
+g2, product4, company2
+g2, product5, company2
+g2, product6, company2
+
+# Specific user-product access grants
+# Format: user, product, permission
+g3, alice, product1, write
+g3, bob, product2, read
+g3, charlie, product4, read  # Cross-company access: company1 user accessing company2 product
+g3, dave, product1, read     # Cross-company access: company2 user accessing company1 product
+g3, dave, product2, read     # Cross-company access: company2 user accessing company1 product
+g3, dave, product3, read     # Cross-company access: company2 user accessing company1 product
+g3, eve, product5, write
+
+# Action hierarchy (action_child, action_parent)
+g4, write, read
+
+# Company-wide permissions
+p, company1, read, product1, allow
+p, company1, read, product2, allow
+p, company1, read, product3, allow
+p, company2, read, product4, allow
+p, company2, read, product5, allow
+p, company2, read, product6, allow
+
+# Explicit allow policies
+p, alice, write, product1, allow
+p, bob, write, product2, allow
+p, eve, write, product5, allow
+
+# Company-wide access for dave to company1
+p, dave, read, company1, allow
+
+# Explicit deny policy for dave to product2
+p, dave, read, product2, deny

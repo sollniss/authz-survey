@@ -1,0 +1,35 @@
+
+services:
+  permify:
+    image: permify/permify:v1.4.0
+    hostname: permify
+    container_name: permify
+    ports:
+      #- "3476:3476" # HTTP
+      - "3478:3478" # GRPC
+    environment:
+      PERMIFY_DATABASE_ENGINE: mysql
+      PERMIFY_DATABASE_URI: test:test@tcp(database:3306)/permify_db
+    restart: on-failure
+    networks:
+      - default
+    depends_on:
+      - database
+
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: permify_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - default
+
+volumes:
+  db:
+
+networks:
+  default:
